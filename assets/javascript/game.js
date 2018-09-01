@@ -14,7 +14,9 @@ var winsText = document.getElementById("wins-text");
 var lossesText = document.getElementById("losses-text");
 var remainingGuesses = document.getElementById("guesses-left");
 var userGuesses = document.getElementById("user-guesses");
-
+var img = document.createElement("img");
+img.src = "assets/images/gameover.png";
+var src = document.getElementById("game-over");
 document.onkeyup = function(event) {
     //indicates pressed key
     var userInput = event.key;
@@ -37,10 +39,7 @@ document.onkeyup = function(event) {
             userHistory.push(userInput);
         }
         if (guessesLeft === 0) {
-            wins = 0;
-            losses = 0;
-            guessesLeft = 9;
-            userHistory =[];
+            document.getElementById("game-over").innerHTML = "<img src='assets/images/gameover.png'/>";
         }
        
         directions.textContent = "Good Luck";
