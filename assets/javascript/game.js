@@ -15,32 +15,38 @@ var lossesText = document.getElementById("losses-text");
 var remainingGuesses = document.getElementById("guesses-left");
 var userGuesses = document.getElementById("user-guesses");
 var img = document.createElement("img");
-img.src = "assets/images/gameover.png";
+imgSrc = "assets/images/gameover.png";
 var src = document.getElementById("game-over");
+
 document.onkeyup = function(event) {
+    if (guessesLeft === 0) {
+        userHistory = [];
+        src.setAttribute("src", imgSrc);
+        document.getElementById("directions-text").style.visibility = "hidden";
+        document.getElementById("wins-text").style.visibility = "hidden";
+        document.getElementById("losses-text").style.visibility = "hidden";
+        document.getElementById("guesses-left").style.visibility = "hidden";
+        document.getElementById("user-guesses").style.visibility = "hidden";
+        return;
+    }
     //indicates pressed key
     var userInput = event.key;
 
     //chooses an element from compChoices array
     var compAnswer = compChoices[Math.floor(Math.random() * compChoices.length)];
 
-    //choices same as compChoices in terms of arrays
-    var choices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-
-    if (choices.indexOf(userInput) > -1) {
+    if (compChoices.indexOf(userInput) > -1) {
         if (userInput === compAnswer) {
             wins++;
-            guessesLeft = 9;
-            userHistory = [];
+            guessesLeft --;
+            userHistory.push(userInput);
         }
         if (userInput != compAnswer) {
             losses++;
             guessesLeft --;
             userHistory.push(userInput);
         }
-        if (guessesLeft === 0) {
-            document.getElementById("game-over").innerHTML = "<img src='assets/images/gameover.png'/>";
-        }
+        
        
         directions.textContent = "Good Luck";
         winsText.textContent = "Wins: " + wins;
